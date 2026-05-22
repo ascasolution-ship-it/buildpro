@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { CloudRain, Sun, Wind, Plus, Filter, Trash2, Edit2, X, ClipboardList, CheckCircle, Clock } from 'lucide-react';
 
-const DailyLogs = () => {
+const DailyLogs = ({ activeProjectId, onSelectProject }) => {
   const [logs, setLogs] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState('all');
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingLog, setEditingLog] = useState(null);
@@ -25,7 +24,7 @@ const DailyLogs = () => {
   useEffect(() => {
     fetchProjects();
     fetchLogs();
-  }, [selectedProject]);
+  }, [activeProjectId]);
 
   const fetchProjects = async () => {
     const { data } = await supabase.from('projects').select('id, name');
@@ -43,8 +42,8 @@ const DailyLogs = () => {
         `)
         .order('date', { ascending: false });
 
-      if (selectedProject !== 'all') {
-        query = query.eq('project_id', selectedProject);
+      if (activeProjectId && activeProjectId !== 'all') {
+        query = query.eq('project_id', activeProjectId);
       }
 
       const { data, error } = await query;
@@ -60,7 +59,7 @@ const DailyLogs = () => {
   const handleOpenCreateModal = () => {
     setEditingLog(null);
     setFormData({
-      project_id: projects[0]?.id || '',
+      project_id: (!activeProjectId || activeProjectId === 'all') ? (projects[0]?.id || '') : activeProjectId,
       date: new Date().toISOString().split('T')[0],
       weather: 'Sunny',
       temperature: '75°F',
@@ -170,8 +169,16 @@ const DailyLogs = () => {
               <select 
                 className="form-input" 
                 style={{ padding: '0.5rem', width: 'auto', marginBottom: 0 }}
-                value={selectedProject}
-                onChange={(e) => setSelectedProject(e.target.value)}
+                value={activeProjectId || 'all'}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === 'all') {
+                    onSelectProject('all', 'Todos los Proyectos');
+                  } else {
+                    const p = projects.find(proj => proj.id === val);
+                    onSelectProject(val, p ? p.name : 'Proyecto');
+                  }
+                }}
               >
                 <option value="all">All Projects</option>
                 {projects.map(p => (

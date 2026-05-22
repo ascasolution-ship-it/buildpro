@@ -3,13 +3,12 @@ import { supabase } from '../supabaseClient';
 import { Gantt, ViewMode } from 'gantt-task-react';
 import 'gantt-task-react/dist/index.css';
 
-const Schedule = () => {
+const Schedule = ({ activeProjectId, onSelectProject }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState(ViewMode.Day);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState('all');
   const [editTask, setEditTask] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [newTask, setNewTask] = useState({
@@ -307,9 +306,9 @@ const Schedule = () => {
     columnWidth = 250;
   }
 
-  const filteredTasks = selectedProject === 'all' 
+  const filteredTasks = (!activeProjectId || activeProjectId === 'all') 
     ? tasks 
-    : tasks.filter(t => t.project_id === selectedProject);
+    : tasks.filter(t => t.project_id === activeProjectId);
 
   const displayTasks = filteredTasks.length > 0 ? filteredTasks : [{
     start: new Date(),
@@ -333,8 +332,16 @@ const Schedule = () => {
             <select 
               className="form-input" 
               style={{ padding: '0.5rem', width: 'auto' }}
-              value={selectedProject}
-              onChange={(e) => setSelectedProject(e.target.value)}
+              value={activeProjectId || 'all'}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (val === 'all') {
+                  onSelectProject('all', 'Todos los Proyectos');
+                } else {
+                  const p = projects.find(proj => proj.id === val);
+                  onSelectProject(val, p ? p.name : 'Proyecto');
+                }
+              }}
             >
               <option value="all">All Projects</option>
               {projects.map(p => (
@@ -351,7 +358,13 @@ const Schedule = () => {
               <option value={ViewMode.Week}>Week</option>
               <option value={ViewMode.Month}>Month</option>
             </select>
-            <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>
+            <button className="btn btn-primary" onClick={() => {
+              setNewTask(prev => ({
+                ...prev,
+                project_id: (!activeProjectId || activeProjectId === 'all') ? '' : activeProjectId
+              }));
+              setIsModalOpen(true);
+            }}>
               <span>+ Add Task</span>
             </button>
           </div>

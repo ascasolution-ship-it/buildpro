@@ -41,6 +41,42 @@ function App() {
   const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
   const [newProject, setNewProject] = useState({ name: '', location: '', deadline: '', budget: '' });
 
+  // Active Project Global State
+  const [projects, setProjects] = useState([]);
+  const [activeProjectId, setActiveProjectId] = useState(() => {
+    return localStorage.getItem('activeProjectId') || 'all';
+  });
+  const [activeProjectName, setActiveProjectName] = useState(() => {
+    return localStorage.getItem('activeProjectName') || 'Todos los Proyectos';
+  });
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('id, name')
+        .order('name');
+      if (error) throw error;
+      if (data) {
+        setProjects(data);
+        // Verify saved active project still exists
+        const savedId = localStorage.getItem('activeProjectId') || 'all';
+        if (savedId !== 'all' && !data.some(p => p.id === savedId)) {
+          handleSelectProject('all', 'Todos los Proyectos');
+        }
+      }
+    } catch (err) {
+      console.error('Error fetching projects list:', err.message);
+    }
+  };
+
+  const handleSelectProject = (id, name) => {
+    setActiveProjectId(id);
+    setActiveProjectName(name);
+    localStorage.setItem('activeProjectId', id);
+    localStorage.setItem('activeProjectName', name);
+  };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -53,24 +89,31 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Fetch projects when user session is active
+  useEffect(() => {
+    if (session) {
+      fetchProjects();
+    }
+  }, [session]);
+
   if (!session) {
     return <Login />;
   }
 
   const renderContent = () => {
     switch(activeTab) {
-      case 'dashboard': return <Dashboard />;
-      case 'projects': return <Projects />;
-      case 'schedule': return <Schedule />;
-      case 'documents': return <Documents />;
-      case 'budgets': return <Budgets />;
-      case 'team': return <Team />;
-      case 'dailylogs': return <DailyLogs />;
+      case 'dashboard': return <Dashboard activeProjectId={activeProjectId} setActiveTab={setActiveTab} onSelectProject={handleSelectProject} />;
+      case 'projects': return <Projects activeProjectId={activeProjectId} onSelectProject={handleSelectProject} setActiveTab={setActiveTab} />;
+      case 'schedule': return <Schedule activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
+      case 'documents': return <Documents activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
+      case 'budgets': return <Budgets activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
+      case 'team': return <Team activeProjectId={activeProjectId} />;
+      case 'dailylogs': return <DailyLogs activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
       case 'subcontractors': return <Subcontractors />;
       case 'equipment': return <Equipment />;
       case 'billing': return <Billing />;
       case 'profile': return <Profile />;
-      default: return <Dashboard />;
+      default: return <Dashboard activeProjectId={activeProjectId} setActiveTab={setActiveTab} onSelectProject={handleSelectProject} />;
     }
   };
 
@@ -94,20 +137,29 @@ function App() {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     try {
-      const { error } = await supabase.from('projects').insert([{
+      const { data, error } = await supabase.from('projects').insert([{
         name: newProject.name,
         location: newProject.location,
         deadline: newProject.deadline || null,
         budget: newProject.budget ? parseFloat(newProject.budget) : 0,
         status: 'Planning',
         progress: 0
-      }]);
+      }]).select();
       
       if (error) throw error;
       
       alert('Project created successfully!');
       setIsNewProjectModalOpen(false);
       setNewProject({ name: '', location: '', deadline: '', budget: '' });
+      
+      // Refresh projects list in App
+      fetchProjects();
+      
+      // Auto-select the newly created project
+      if (data && data.length > 0) {
+        handleSelectProject(data[0].id, data[0].name);
+      }
+
       // Force refresh by toggling tab if on projects
       if (activeTab === 'projects') {
         setActiveTab('dashboard');
@@ -208,7 +260,45 @@ function App() {
       {/* Main Content */}
       <main className="main-content">
         <header className="header">
-          <h1>{getPageTitle()}</h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <h1>{getPageTitle()}</h1>
+            
+            {/* Premium Project Selector */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: '1rem' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Proyecto:</span>
+              <select
+                className="form-input glass"
+                style={{
+                  width: 'auto',
+                  padding: '0.4rem 2.2rem 0.4rem 1rem',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  borderRadius: '0.5rem',
+                  border: '1px solid var(--border-color)',
+                  background: 'rgba(20, 25, 35, 0.6)',
+                  cursor: 'pointer',
+                  color: '#fff',
+                  outline: 'none',
+                  transition: 'all 0.3s ease'
+                }}
+                value={activeProjectId}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === 'all') {
+                    handleSelectProject('all', 'Todos los Proyectos');
+                  } else {
+                    const p = projects.find(proj => proj.id === val);
+                    handleSelectProject(val, p ? p.name : 'Proyecto');
+                  }
+                }}
+              >
+                <option value="all">📁 Todos los Proyectos</option>
+                {projects.map(p => (
+                  <option key={p.id} value={p.id}>🚧 {p.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
           
           <div className="header-actions">
             <div className="form-group" style={{ marginBottom: 0, position: 'relative' }}>

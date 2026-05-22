@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapPin, Calendar, MoreVertical } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
-const Projects = () => {
+const Projects = ({ activeProjectId, onSelectProject, setActiveTab }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState('All statuses');
@@ -87,8 +87,24 @@ const Projects = () => {
                 </tr>
               ) : (
                 filteredProjects.map(p => (
-                  <tr key={p.id}>
-                    <td style={{ fontWeight: 500 }}>{p.name}</td>
+                  <tr 
+                    key={p.id}
+                    onClick={() => {
+                      onSelectProject(p.id, p.name);
+                      setActiveTab('dashboard');
+                    }}
+                    style={{ 
+                      cursor: 'pointer',
+                      background: activeProjectId === p.id ? 'rgba(59, 130, 246, 0.12)' : 'transparent',
+                      borderLeft: activeProjectId === p.id ? '3px solid var(--primary-color)' : 'none'
+                    }}
+                  >
+                    <td style={{ fontWeight: 500 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        {activeProjectId === p.id && <span style={{ color: 'var(--primary-color)' }}>▶</span>}
+                        <span>{p.name}</span>
+                      </div>
+                    </td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
                         <MapPin size={16} />
@@ -123,7 +139,10 @@ const Projects = () => {
                       <button 
                         className="btn btn-secondary" 
                         style={{ padding: '0.5rem', color: 'var(--danger-color)' }}
-                        onClick={() => handleDeleteProject(p.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteProject(p.id);
+                        }}
                         title="Delete Project"
                       >
                         <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>&times;</span>

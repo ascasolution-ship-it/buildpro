@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DollarSign, TrendingUp, AlertTriangle, Plus, X } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
-const Budgets = () => {
+const Budgets = ({ activeProjectId }) => {
   const [budgets, setBudgets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totals, setTotals] = useState({ allocated: 0, spent: 0, alerts: 0, activeProjects: 0 });
@@ -12,7 +12,7 @@ const Budgets = () => {
 
   useEffect(() => {
     fetchBudgets();
-  }, []);
+  }, [activeProjectId]);
 
   const fetchBudgets = async () => {
     try {
@@ -39,26 +39,28 @@ const Budgets = () => {
       let alerts = 0;
       let active = 0;
 
-      const combinedData = (projectData || []).map(p => {
-        const b = budgetData?.find(b => b.project_id === p.id) || { spent: 0 };
-        const allocated = Number(p.budget || 0);
-        const spent = Number(b.spent || 0);
-        const remaining = allocated - spent;
-        
-        totalAllocated += allocated;
-        totalSpent += spent;
-        
-        if (p.status !== 'Completed') active++;
-        if (remaining < 0 || (allocated > 0 && spent / allocated > 0.9)) alerts++;
+      const combinedData = (projectData || [])
+        .filter(p => !activeProjectId || activeProjectId === 'all' || p.id === activeProjectId)
+        .map(p => {
+          const b = budgetData?.find(b => b.project_id === p.id) || { spent: 0 };
+          const allocated = Number(p.budget || 0);
+          const spent = Number(b.spent || 0);
+          const remaining = allocated - spent;
+          
+          totalAllocated += allocated;
+          totalSpent += spent;
+          
+          if (p.status !== 'Completed') active++;
+          if (remaining < 0 || (allocated > 0 && spent / allocated > 0.9)) alerts++;
 
-        return {
-          id: p.id,
-          name: p.name,
-          allocated,
-          spent,
-          remaining
-        };
-      });
+          return {
+            id: p.id,
+            name: p.name,
+            allocated,
+            spent,
+            remaining
+          };
+        });
 
       setBudgets(combinedData);
       setTotals({ allocated: totalAllocated, spent: totalSpent, alerts, activeProjects: active });
@@ -152,7 +154,13 @@ const Budgets = () => {
         <div className="card-header">
           <h2>Financial Breakdown by Project</h2>
           <div className="header-actions">
-            <button className="btn btn-primary" onClick={() => setIsExpenseModalOpen(true)}>
+            <button className="btn btn-primary" onClick={() => {
+              setNewExpense(prev => ({
+                ...prev,
+                project_id: (!activeProjectId || activeProjectId === 'all') ? '' : activeProjectId
+              }));
+              setIsExpenseModalOpen(true);
+            }}>
               <Plus size={18} />
               <span>Log Expense</span>
             </button>
