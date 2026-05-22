@@ -13,7 +13,9 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
     location: '',
     budget: 0,
     deadline: null,
-    color: 'var(--primary-color)'
+    color: 'var(--primary-color)',
+    owner: '',
+    description: ''
   });
   const [projects, setProjects] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
@@ -43,7 +45,9 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
           location: '',
           budget: 0,
           deadline: null,
-          color: 'var(--primary-color)'
+          color: 'var(--primary-color)',
+          owner: '',
+          description: ''
         });
 
         if (pData) {
@@ -84,7 +88,9 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
           location: currentProj ? currentProj.location : '',
           budget: currentProj ? currentProj.budget : 0,
           deadline: currentProj ? currentProj.deadline : null,
-          color: currentProj ? currentProj.color : 'var(--primary-color)'
+          color: currentProj ? currentProj.color : 'var(--primary-color)',
+          owner: currentProj ? currentProj.owner : '',
+          description: currentProj ? currentProj.description : ''
         });
 
         if (currentProj) {
@@ -195,21 +201,17 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
               )
             ) : (
               <div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Location</span>
-                    <span style={{ fontWeight: 500, color: '#fff' }}>{stats.location || 'N/A'}</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Propietario / Cliente</span>
+                    <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.owner || '—'}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Budget</span>
-                    <span style={{ fontWeight: 500, color: '#fff' }}>${Number(stats.budget || 0).toLocaleString()}</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Descripción / Tipo</span>
+                    <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.description || '—'}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Deadline</span>
-                    <span style={{ fontWeight: 500, color: '#fff' }}>{stats.deadline ? new Date(stats.deadline).toLocaleDateString() : 'N/A'}</span>
-                  </div>
-                  <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Current Phase</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Estado</span>
                     <div>
                       <span className={`badge badge-${
                         stats.status === 'Completed' ? 'success' : 
@@ -219,6 +221,18 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
                         {stats.status}
                       </span>
                     </div>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Localización</span>
+                    <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.location || '—'}</span>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Presupuesto</span>
+                    <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>${Number(stats.budget || 0).toLocaleString()}</span>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Fecha Límite</span>
+                    <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.deadline ? new Date(stats.deadline).toLocaleDateString() : '—'}</span>
                   </div>
                 </div>
                 <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', display: 'flex', gap: '1rem' }}>

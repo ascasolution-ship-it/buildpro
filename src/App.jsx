@@ -39,7 +39,7 @@ function App() {
   const [session, setSession] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
-  const [newProject, setNewProject] = useState({ name: '', location: '', deadline: '', budget: '' });
+  const [newProject, setNewProject] = useState({ name: '', location: '', deadline: '', budget: '', owner: '', description: '' });
 
   // Active Project Global State
   const [projects, setProjects] = useState([]);
@@ -103,7 +103,7 @@ function App() {
   const renderContent = () => {
     switch(activeTab) {
       case 'dashboard': return <Dashboard activeProjectId={activeProjectId} setActiveTab={setActiveTab} onSelectProject={handleSelectProject} />;
-      case 'projects': return <Projects activeProjectId={activeProjectId} onSelectProject={handleSelectProject} setActiveTab={setActiveTab} />;
+      case 'projects': return <Projects activeProjectId={activeProjectId} onSelectProject={handleSelectProject} setActiveTab={setActiveTab} onProjectsChange={fetchProjects} />;
       case 'schedule': return <Schedule activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
       case 'documents': return <Documents activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
       case 'budgets': return <Budgets activeProjectId={activeProjectId} onSelectProject={handleSelectProject} />;
@@ -142,15 +142,17 @@ function App() {
         location: newProject.location,
         deadline: newProject.deadline || null,
         budget: newProject.budget ? parseFloat(newProject.budget) : 0,
+        owner: newProject.owner || '',
+        description: newProject.description || '',
         status: 'Planning',
         progress: 0
       }]).select();
       
       if (error) throw error;
       
-      alert('Project created successfully!');
+      alert('¡Proyecto creado exitosamente!');
       setIsNewProjectModalOpen(false);
-      setNewProject({ name: '', location: '', deadline: '', budget: '' });
+      setNewProject({ name: '', location: '', deadline: '', budget: '', owner: '', description: '' });
       
       // Refresh projects list in App
       fetchProjects();
@@ -337,24 +339,32 @@ function App() {
             </div>
             <form onSubmit={handleCreateProject}>
               <div className="form-group">
-                <label className="form-label">Project Name</label>
-                <input type="text" className="form-input" required value={newProject.name} onChange={e => setNewProject({...newProject, name: e.target.value})} />
+                <label className="form-label">Nombre del Proyecto</label>
+                <input type="text" className="form-input" required value={newProject.name} onChange={e => setNewProject({...newProject, name: e.target.value})} placeholder="Ej: Construcción Casa de Campo" />
               </div>
               <div className="form-group">
-                <label className="form-label">Location</label>
-                <input type="text" className="form-input" required value={newProject.location} onChange={e => setNewProject({...newProject, location: e.target.value})} />
+                <label className="form-label">Propietario / Cliente</label>
+                <input type="text" className="form-input" value={newProject.owner} onChange={e => setNewProject({...newProject, owner: e.target.value})} placeholder="Ej: Sonia Homes LLC o Nombre de Cliente" />
               </div>
               <div className="form-group">
-                <label className="form-label">Deadline</label>
+                <label className="form-label">Descripción / Tipo de Obra</label>
+                <input type="text" className="form-input" value={newProject.description} onChange={e => setNewProject({...newProject, description: e.target.value})} placeholder="Ej: Construcción nueva, Remodelación, etc." />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Localización</label>
+                <input type="text" className="form-input" required value={newProject.location} onChange={e => setNewProject({...newProject, location: e.target.value})} placeholder="Ej: 405 Bryan St, Glen Rose" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Fecha Límite</label>
                 <input type="date" className="form-input" value={newProject.deadline} onChange={e => setNewProject({...newProject, deadline: e.target.value})} />
               </div>
               <div className="form-group">
-                <label className="form-label">Budget ($)</label>
-                <input type="number" className="form-input" required value={newProject.budget} onChange={e => setNewProject({...newProject, budget: e.target.value})} />
+                <label className="form-label">Presupuesto ($)</label>
+                <input type="number" className="form-input" required value={newProject.budget} onChange={e => setNewProject({...newProject, budget: e.target.value})} placeholder="0.00" />
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                <button type="button" className="btn btn-secondary" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setIsNewProjectModalOpen(false)}>Cancel</button>
-                <button type="submit" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>Create Project</button>
+                <button type="button" className="btn btn-secondary" style={{ flex: 1, justifyContent: 'center' }} onClick={() => setIsNewProjectModalOpen(false)}>Cancelar</button>
+                <button type="submit" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>Crear Proyecto</button>
               </div>
             </form>
           </div>
