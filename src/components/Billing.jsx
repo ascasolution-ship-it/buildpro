@@ -7,46 +7,46 @@ const Billing = () => {
 
   const handlePlanSelect = (plan) => {
     if (plan.id === 'enterprise') {
-      window.location.href = 'mailto:ventas@ascasolutions.com?subject=Interes en Plan Corporativo BuildPro';
+      window.location.href = 'mailto:sales@ascasolutions.com?subject=Interest in BuildPro Enterprise Plan';
     } else {
-      alert(`[Stripe Checkout - ASCA Solutions]\n\nRedirigiendo a la pasarela de pagos segura de Stripe para suscribirse al plan "${plan.name}" (${billingCycle === 'monthly' ? 'Mensual' : 'Anual'}).\n\nCosto: $${plan.price} USD / mes\n\n🎁 ¡Tu primer mes es gratis! Se aplicará una prueba gratuita de 30 días antes del primer cobro.`);
+      alert(`[Stripe Checkout - ASCA Solutions]\n\nRedirecting to the secure Stripe payment gateway to subscribe to the "${plan.name}" plan (${billingCycle === 'monthly' ? 'Monthly' : 'Yearly'}).\n\nPrice: $${plan.price} USD / month\n\n🎁 Your first month is free! A 30-day free trial will be applied before the first charge.`);
     }
   };
 
   const plans = [
     {
       id: 'basic',
-      name: 'Plan Contratista',
+      name: 'Contractor Plan',
       price: billingCycle === 'monthly' ? 49 : 39,
-      trial: '1 mes gratis',
-      description: 'Ideal para contratistas independientes y obras residenciales pequeñas.',
+      trial: '1 month free',
+      description: 'Ideal for independent contractors and small residential projects.',
       features: [
-        'Prueba gratis por 30 días',
-        'Hasta 3 proyectos activos',
-        'Cronograma Gantt interactivo',
-        'Gestión de subcontratistas (máx. 10)',
-        'Bitácora diaria del sitio',
-        '5 GB de almacenamiento de planos',
-        'Soporte estándar por correo'
+        '30-day free trial',
+        'Up to 3 active projects',
+        'Interactive Gantt chart',
+        'Subcontractor management (max 10)',
+        'Daily site log',
+        '5 GB blueprint storage',
+        'Standard email support'
       ],
       icon: Briefcase,
       color: 'from-blue-600 to-cyan-500'
     },
     {
       id: 'pro',
-      name: 'Constructor Pro',
+      name: 'Pro Builder',
       price: billingCycle === 'monthly' ? 149 : 119,
-      trial: '1 mes gratis',
-      description: 'Para empresas de construcción medianas que necesitan control total y flujos automatizados.',
+      trial: '1 month free',
+      description: 'For medium-sized construction companies that need full control and automated workflows.',
       features: [
-        'Prueba gratis por 30 días',
-        'Proyectos activos ilimitados',
-        'Gantt con cascada y dependencias avanzadas',
-        'Subcontratistas y control de flota ilimitado',
-        'Reportes diarios exportables con clima',
-        '50 GB de almacenamiento para planos y fotos',
-        'Soporte prioritario 24/7',
-        'Acceso de clientes / propietarios'
+        '30-day free trial',
+        'Unlimited active projects',
+        'Gantt chart with cascade & advanced dependencies',
+        'Unlimited subcontractors & fleet control',
+        'Exportable daily reports with weather',
+        '50 GB storage for blueprints & photos',
+        'Priority 24/7 support',
+        'Client / owner access'
       ],
       icon: ShieldCheck,
       color: 'from-violet-600 to-indigo-600',
@@ -54,17 +54,17 @@ const Billing = () => {
     },
     {
       id: 'enterprise',
-      name: 'Corporativo / Enterprise',
-      price: 'Personalizado',
-      description: 'Para grandes desarrolladoras e inmobiliarias con múltiples frentes de obra nacionales.',
+      name: 'Enterprise',
+      price: 'Custom',
+      description: 'For large developers and real estate firms with multiple national work fronts.',
       features: [
-        'Todo lo de Constructor Pro',
-        'Almacenamiento en la nube ilimitado',
-        'API de integración con ERPs contables',
-        'Dominio y marca personalizada (White-Label)',
-        'Gerente de cuenta exclusivo',
-        'Capacitación presencial al personal de obra',
-        'Acuerdos de Nivel de Servicio (SLA) del 99.9%'
+        'Everything in Pro Builder',
+        'Unlimited cloud storage',
+        'Integration API with accounting ERPs',
+        'Custom domain & branding (White-Label)',
+        'Dedicated account manager',
+        'In-person training for site staff',
+        '99.9% Service Level Agreements (SLA)'
       ],
       icon: CreditCard,
       color: 'from-emerald-600 to-teal-500'
@@ -72,16 +72,16 @@ const Billing = () => {
   ];
 
   const invoices = [
-    { id: 'INV-2026-004', date: '2026-05-15', amount: 149.00, status: 'Pagado', plan: 'Constructor Pro (Mensual)' },
-    { id: 'INV-2026-003', date: '2026-04-15', amount: 149.00, status: 'Pagado', plan: 'Constructor Pro (Mensual)' },
-    { id: 'INV-2026-002', date: '2026-03-15', amount: 149.00, status: 'Pagado', plan: 'Constructor Pro (Mensual)' },
-    { id: 'INV-2026-001', date: '2026-02-15', amount: 149.00, status: 'Pagado', plan: 'Constructor Pro (Mensual)' }
+    { id: 'INV-2026-004', date: '2026-05-15', amount: 149.00, status: 'Paid', plan: 'Pro Builder (Monthly)' },
+    { id: 'INV-2026-003', date: '2026-04-15', amount: 149.00, status: 'Paid', plan: 'Pro Builder (Monthly)' },
+    { id: 'INV-2026-002', date: '2026-03-15', amount: 149.00, status: 'Paid', plan: 'Pro Builder (Monthly)' },
+    { id: 'INV-2026-001', date: '2026-02-15', amount: 149.00, status: 'Paid', plan: 'Pro Builder (Monthly)' }
   ];
 
   return (
     <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', paddingBottom: '3rem' }}>
       
-      {/* Top Banner - Resumen de Suscripción */}
+      {/* Top Banner - Subscription Summary */}
       <div className="content-card glass" style={{ 
         background: 'linear-gradient(135deg, rgba(88, 80, 236, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
         border: '1px solid rgba(88, 80, 236, 0.3)',
@@ -98,26 +98,26 @@ const Billing = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
               <span className="badge" style={{ backgroundColor: 'rgba(88, 80, 236, 0.2)', color: '#a5b4fc', border: '1px solid rgba(88, 80, 236, 0.4)', padding: '0.25rem 0.75rem' }}>
-                Plan Activo
+                Active Plan
               </span>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Siguiente cobro: 15 de Junio, 2026</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Next billing date: June 15, 2026</span>
             </div>
             <h2 style={{ fontSize: '2rem', fontWeight: '800', fontFamily: 'Outfit, sans-serif', color: '#fff', marginBottom: '0.5rem' }}>
-              Constructor Pro
+              Pro Builder
             </h2>
             <p style={{ color: 'var(--text-muted)', maxWidth: '600px', fontSize: '0.95rem' }}>
-              Tu cuenta está optimizada para la coordinación de obras complejas, con cálculo automático de cascadas Gantt y control integral de subcontratistas.
+              Your account is optimized for complex project coordination, with automatic Gantt cascade calculations and comprehensive subcontractor control.
             </p>
           </div>
 
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(255,255,255,0.05)' }}>
             <div style={{ textAlign: 'right' }}>
-              <span style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Costo Mensual</span>
+              <span style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Monthly Cost</span>
               <span style={{ fontSize: '1.75rem', fontWeight: '800', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>$149.00 USD</span>
             </div>
             <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(255,255,255,0.1)' }} />
             <button className="btn btn-primary" style={{ padding: '0.75rem 1.25rem' }}>
-              Gestionar Método
+              Manage Method
             </button>
           </div>
         </div>
@@ -126,25 +126,25 @@ const Billing = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginTop: '2.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '2rem' }}>
           <div>
             <div style={{ display: 'flex', justifySelf: 'start', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-              <Briefcase size={16} /><span>Proyectos Activos</span>
+              <Briefcase size={16} /><span>Active Projects</span>
             </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem' }}>2 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>/ Ilimitados</span></div>
+            <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem' }}>2 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>/ Unlimited</span></div>
             <div style={{ height: '6px', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
               <div style={{ width: '20%', height: '100%', background: 'linear-gradient(90deg, #5850ec, #6875f5)', borderRadius: '3px' }} />
             </div>
           </div>
           <div>
             <div style={{ display: 'flex', justifySelf: 'start', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-              <Users size={16} /><span>Usuarios en Obra / Oficina</span>
+              <Users size={16} /><span>Users on Site / Office</span>
             </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem' }}>4 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>/ Ilimitados</span></div>
+            <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem' }}>4 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>/ Unlimited</span></div>
             <div style={{ height: '6px', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
               <div style={{ width: '15%', height: '100%', background: 'linear-gradient(90deg, #5850ec, #6875f5)', borderRadius: '3px' }} />
             </div>
           </div>
           <div>
             <div style={{ display: 'flex', justifySelf: 'start', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-              <Database size={16} /><span>Espacio en Disco (Planos)</span>
+              <Database size={16} /><span>Disk Space (Blueprints)</span>
             </div>
             <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem' }}>0.45 GB <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>/ 50 GB</span></div>
             <div style={{ height: '6px', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
@@ -154,9 +154,9 @@ const Billing = () => {
         </div>
       </div>
 
-      {/* Selector de Ciclo de Facturación */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
-        <span style={{ color: billingCycle === 'monthly' ? '#fff' : 'var(--text-muted)', fontWeight: billingCycle === 'monthly' ? '600' : '400', transition: 'all 0.3s' }}>Mensual</span>
+      {/* Billing Cycle Selector */}
+      <div style={{ display: 'flex', justifySelf: 'center', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+        <span style={{ color: billingCycle === 'monthly' ? '#fff' : 'var(--text-muted)', fontWeight: billingCycle === 'monthly' ? '600' : '400', transition: 'all 0.3s' }}>Monthly</span>
         <button 
           onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
           style={{
@@ -171,11 +171,11 @@ const Billing = () => {
           }} />
         </button>
         <span style={{ color: billingCycle === 'yearly' ? '#fff' : 'var(--text-muted)', fontWeight: billingCycle === 'yearly' ? '600' : '400', transition: 'all 0.3s', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          Anual <span className="badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>Ahorra 20%</span>
+          Yearly <span className="badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>Save 20%</span>
         </span>
       </div>
 
-      {/* Planes de Precios */}
+      {/* Pricing Plans */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
         {plans.map((plan) => {
           const PlanIcon = plan.icon;
@@ -199,7 +199,7 @@ const Billing = () => {
                   position: 'absolute', top: '1.25rem', right: '1.25rem',
                   backgroundColor: '#5850ec', color: '#fff', fontWeight: 'bold', padding: '0.25rem 0.75rem'
                 }}>
-                  Más Popular
+                  Most Popular
                 </span>
               )}
 
@@ -219,7 +219,7 @@ const Billing = () => {
                   <div>
                     <div style={{ display: 'flex', alignItems: 'baseline', color: '#fff' }}>
                       <span style={{ fontSize: '2.5rem', fontWeight: '800', fontFamily: 'Outfit, sans-serif' }}>${plan.price}</span>
-                      <span style={{ color: 'var(--text-muted)', marginLeft: '0.25rem' }}>/mes</span>
+                      <span style={{ color: 'var(--text-muted)', marginLeft: '0.25rem' }}>/month</span>
                     </div>
                     {plan.trial && (
                       <span className="badge" style={{
@@ -237,7 +237,7 @@ const Billing = () => {
                   </span>
                 )}
                 {typeof plan.price === 'number' && billingCycle === 'yearly' && (
-                  <span style={{ fontSize: '0.75rem', color: '#34d399', display: 'block', marginTop: '0.5rem' }}>Facturado anualmente (ahorras ${(plan.price * 12 * 0.25).toFixed(0)}/año)</span>
+                  <span style={{ fontSize: '0.75rem', color: '#34d399', display: 'block', marginTop: '0.5rem' }}>Billed annually (save ${(plan.price * 12 * 0.25).toFixed(0)}/year)</span>
                 )}
               </div>
 
@@ -257,30 +257,30 @@ const Billing = () => {
                 style={{ width: '100%', justifyContent: 'center', padding: '0.85rem' }}
                 disabled={isCurrent}
               >
-                {isCurrent ? 'Plan Actual' : plan.price === 'Personalizado' ? 'Contactar Ventas' : 'Cambiar a este Plan'}
+                {isCurrent ? 'Current Plan' : plan.price === 'Custom' ? 'Contact Sales' : 'Switch to this Plan'}
               </button>
             </div>
           );
         })}
       </div>
 
-      {/* Historial de Invoices */}
+      {/* Invoice History */}
       <div className="content-card glass">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: '700', fontFamily: 'Outfit, sans-serif', color: '#fff' }}>Historial de Facturación</h3>
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Método activo: Visa finalizado en 4242</span>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: '700', fontFamily: 'Outfit, sans-serif', color: '#fff' }}>Billing History</h3>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Active method: Visa ending in 4242</span>
         </div>
 
         <div style={{ overflowX: 'auto' }}>
           <table className="table">
             <thead>
               <tr>
-                <th>Referencia</th>
-                <th>Fecha de Factura</th>
-                <th>Concepto / Detalle</th>
-                <th>Monto</th>
-                <th>Estado</th>
-                <th style={{ textAlign: 'right' }}>Descargar</th>
+                <th>Reference</th>
+                <th>Invoice Date</th>
+                <th>Concept / Detail</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th style={{ textAlign: 'right' }}>Download</th>
               </tr>
             </thead>
             <tbody>

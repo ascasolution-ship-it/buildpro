@@ -4,8 +4,8 @@ import { supabase } from '../supabaseClient';
 
 // Helper content generators for mock downloads
 const getBlueprintSVG = (projectName, location) => {
-  const safeProj = projectName || 'Proyecto de Construcción';
-  const safeLoc = location || 'Dirección de Obra';
+  const safeProj = projectName || 'Construction Project';
+  const safeLoc = location || 'Work Site Address';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
   <rect width="800" height="600" fill="#0b1329"/>
   <defs>
@@ -33,10 +33,10 @@ const getBlueprintSVG = (projectName, location) => {
   <rect x="255" y="455" width="10" height="10" fill="#00d2ff" />
   <rect x="515" y="455" width="10" height="10" fill="#00d2ff" />
   <rect x="735" y="455" width="10" height="10" fill="#00d2ff" />
-  <text x="160" y="260" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">SALA / ESTAR</text>
-  <text x="390" y="150" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">COCINA</text>
-  <text x="390" y="350" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">COMEDOR</text>
-  <text x="630" y="260" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">DORMITORIO</text>
+  <text x="160" y="260" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">LIVING ROOM</text>
+  <text x="390" y="150" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">KITCHEN</text>
+  <text x="390" y="350" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">DINING ROOM</text>
+  <text x="630" y="260" fill="rgba(0, 210, 255, 0.7)" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold">BEDROOM</text>
   <circle cx="720" cy="510" r="20" fill="none" stroke="#00d2ff" stroke-width="1"/>
   <line x1="720" y1="530" x2="720" y2="490" stroke="#00d2ff" stroke-width="1.5" />
   <polygon points="720,485 715,495 725,495" fill="#00d2ff" />
@@ -52,50 +52,50 @@ const getBlueprintSVG = (projectName, location) => {
     <text x="160" y="32">6.20m</text>
     <text x="390" y="32">7.50m</text>
     <text x="630" y="32">6.20m</text>
-    <text x="390" y="22" font-size="12" font-weight="bold">ANCHO TOTAL: 19.90m</text>
+    <text x="390" y="22" font-size="12" font-weight="bold">TOTAL WIDTH: 19.90m</text>
   </g>
   <rect x="60" y="475" width="280" height="95" fill="#0b1329" stroke="#00d2ff" stroke-width="1.5" />
   <line x1="60" y1="505" x2="340" y2="505" stroke="#00d2ff" stroke-width="1" />
   <line x1="60" y1="535" x2="340" y2="535" stroke="#00d2ff" stroke-width="1" />
   <line x1="200" y1="535" x2="200" y2="570" stroke="#00d2ff" stroke-width="1" />
   <text x="70" y="495" fill="#00d2ff" font-family="monospace" font-size="11" font-weight="bold">ASCA SOLUTIONS - BUILDPRO</text>
-  <text x="70" y="522" fill="#00d2ff" font-family="monospace" font-size="9">PROYECTO: ${safeProj}</text>
-  <text x="70" y="550" fill="#00d2ff" font-family="monospace" font-size="8">UBICACIÓN: ${safeLoc}</text>
-  <text x="70" y="562" fill="#00d2ff" font-family="monospace" font-size="8">PLANO: ARQ-PLN-01</text>
-  <text x="210" y="550" fill="#00d2ff" font-family="monospace" font-size="8">FECHA: 2026</text>
-  <text x="210" y="562" fill="#00d2ff" font-family="monospace" font-size="8">ESCALA: 1:50</text>
+  <text x="70" y="522" fill="#00d2ff" font-family="monospace" font-size="9">PROJECT: ${safeProj}</text>
+  <text x="70" y="550" fill="#00d2ff" font-family="monospace" font-size="8">LOCATION: ${safeLoc}</text>
+  <text x="70" y="562" fill="#00d2ff" font-family="monospace" font-size="8">PLAN: ARQ-PLN-01</text>
+  <text x="210" y="550" fill="#00d2ff" font-family="monospace" font-size="8">DATE: 2026</text>
+  <text x="210" y="562" fill="#00d2ff" font-family="monospace" font-size="8">SCALE: 1:50</text>
 </svg>`;
 };
 
 const getContractText = (projectName, location, budget, deadline) => {
-  return `CONTRATO DE SERVICIOS DE CONSTRUCCIÓN Y OBRA CIVIL
+  return `CONSTRUCTION AND CIVIL WORKS SERVICES CONTRACT
 
-Este Contrato de Servicios de Construcción (en adelante, el "Contrato") se celebra y entra en vigencia a partir del ${new Date().toLocaleDateString()}, por y entre:
+This Construction Services Contract (hereinafter, the "Contract") is entered into and made effective as of ${new Date().toLocaleDateString()}, by and between:
 
-CONTRATISTA: ASCA Solutions LLC, constituida formalmente con domicilio en Vercel & Supabase Cloud.
-PROPIETARIO / CLIENTE: Sonia Home LLC.
+CONTRACTOR: ASCA Solutions LLC, formally incorporated with address at Vercel & Supabase Cloud.
+OWNER / CLIENT: Sonia Home LLC.
 
-Ambas partes acuerdan sujetarse a las siguientes cláusulas y condiciones en relación con el desarrollo de la obra:
+Both parties agree to be bound by the following clauses and conditions regarding the development of the project:
 
-1. DESCRIPCIÓN DEL PROYECTO
-El Contratista se compromete a ejecutar, coordinar y finalizar los trabajos de construcción del proyecto denominado:
-Nombre del Proyecto: ${projectName || 'Todos los Proyectos'}
-Ubicación de la Obra: ${location || 'No especificada'}
+1. PROJECT DESCRIPTION
+The Contractor commits to executing, coordinating, and completing the construction work of the project named:
+Project Name: ${projectName || 'All Projects'}
+Project Location: ${location || 'Not specified'}
 
-2. PRESUPUESTO Y COSTOS
-El costo acordado para la ejecución total del proyecto es de $${Number(budget || 0).toLocaleString()} USD (Dólares de los Estados Unidos de América). Este monto incluye la adquisición de materiales principales, contratación de subcontractistas autorizados y dirección técnica, salvo modificaciones aprobadas por escrito en la bitácora de obra.
+2. BUDGET AND COSTS
+The agreed cost for the total execution of the project is $${Number(budget || 0).toLocaleString()} USD (United States Dollars). This amount includes the acquisition of major materials, hiring of authorized subcontractors, and technical supervision, unless modified and approved in writing in the daily logs.
 
-3. PLAZO DE ENTREGA
-Los trabajos de construcción darán inicio de forma inmediata tras la firma de este documento, y la fecha objetivo de finalización definitiva está estipulada para el:
-Fecha Límite: ${deadline ? new Date(deadline).toLocaleDateString() : 'No especificada'}
+3. DELIVERY DEADLINE
+Construction work shall begin immediately upon signing this document, and the target deadline for final completion is set for:
+Deadline: ${deadline ? new Date(deadline).toLocaleDateString() : 'Not specified'}
 
-4. DECLARACIONES Y GARANTÍAS
-El Contratista garantiza que toda la mano de obra y materiales provistos cumplirán estrictamente con los códigos de edificación locales vigentes. Se otorga una garantía de vicios ocultos de doce (12) meses contados a partir del acta de entrega de la obra.
+4. REPRESENTATIONS AND WARRANTIES
+The Contractor warrants that all labor and materials provided will strictly comply with current local building codes. A warranty against hidden defects is granted for twelve (12) months from the date of final delivery.
 
-En conformidad con lo anterior, ambas partes firman el presente contrato.
+In witness whereof, both parties sign this contract.
 
 ___________________________               ___________________________
-Por el Propietario (Sonia Home LLC)       Por el Contratista (ASCA Solutions)
+For the Owner (Sonia Home LLC)       For the Contractor (ASCA Solutions)
 `;
 };
 
@@ -106,41 +106,41 @@ const getEstimateCSV = (projectName, budget) => {
   const acabados = Math.round(budget * 0.20);
   const contingencias = Math.round(budget * 0.10);
   
-  return `PRESUPUESTO ESTIMADO Y DESGLOSE DE COSTOS
-Proyecto: ${projectName || 'Todos los Proyectos'}
-Fecha: ${new Date().toLocaleDateString()}
-Moneda: USD
+  return `ESTIMATED BUDGET AND COST BREAKDOWN
+Project: ${projectName || 'All Projects'}
+Date: ${new Date().toLocaleDateString()}
+Currency: USD
 
-Categoria,Porcentaje (%),Monto Asignado (USD),Descripcion
-Cimentacion y Suelo,15.00%,${cimentacion},Excavacion y cimientos de concreto de prueba
-Estructura (Framing),30.00%,${estructura},Muros de carga y techado de prueba
-Sistemas Electrico/Plomeria,25.00%,${sistemas},Instalaciones electricas y HVAC de prueba
-Acabados Interiores/Exteriores,20.00%,${acabados},Pintura pisos y puertas de prueba
-Permisos y Contingencias,10.00%,${contingencias},Fondo de imprevistos y licencias de prueba
-TOTAL GENERAL,100.00%,${budget},Presupuesto total estimado para la obra
+Category,Percentage (%),Assigned Amount (USD),Description
+Foundation & Soils,15.00%,${cimentacion},Excavation and test concrete footings
+Framing & Structure,30.00%,${estructura},Load-bearing walls and test roof framing
+MEP Installations,25.00%,${sistemas},Electrical wiring and test HVAC systems
+Interior/Exterior Finishes,20.00%,${acabados},Painting flooring and test doors
+Permits & Contingencies,10.00%,${contingencias},Unforeseen contingency fund and test licensing
+GRAND TOTAL,100.00%,${budget},Total estimated budget for the project
 `;
 };
 
 const getGeneralPermitText = (fileName, projectName, location) => {
-  return `LICENCIA METROPOLITANA DE EDIFICACIÓN Y PERMISOS DE OBRA
-Código de Licencia: PERMIT-${Math.floor(100000 + Math.random() * 900000)}
+  return `METROPOLITAN BUILDING LICENSE AND CONSTRUCTION PERMITS
+License Code: PERMIT-${Math.floor(100000 + Math.random() * 900000)}
 
-Por medio del presente documento, el Departamento de Urbanismo y Control Territorial certifica que el proyecto:
-Proyecto: ${projectName || 'Todos los Proyectos'}
-Ubicación: ${location || 'No especificada'}
+Through this document, the Department of Urban Planning and Territorial Control certifies that the project:
+Project: ${projectName || 'All Projects'}
+Location: ${location || 'Not specified'}
 
-Ha obtenido la aprobación y el permiso oficial de construcción correspondiente al expediente "${fileName}".
+Has obtained approval and the corresponding official construction permit for file "${fileName}".
 
-ESPECIFICACIONES DE AUTORIZACIÓN:
-- Estado del Permiso: VIGENTE / APROBADO
-- Categoría de Obra: Edificación Residencial / Comercial
-- Inspector Asignado: Ing. Roberto S.
-- Vigencia de Inspección: 12 meses a partir de la fecha de emisión.
+AUTHORIZATION SPECIFICATIONS:
+- Permit Status: ACTIVE / APPROVED
+- Project Category: Residential / Commercial Building
+- Assigned Inspector: Roberto S., PE
+- Inspection Validity: 12 months from issue date.
 
-Queda estrictamente obligatorio mantener una copia impresa de esta licencia y los planos aprobados en la caseta de la obra para revisiones e inspecciones periódicas del ayuntamiento.
+It is strictly mandatory to maintain a printed copy of this license and the approved plans at the construction site for periodic municipal inspections.
 
-Fecha de Emisión: ${new Date().toLocaleDateString()}
-Sello y Firma: Dirección General de Obras Públicas
+Issue Date: ${new Date().toLocaleDateString()}
+Stamp & Signature: Directorate General of Public Works
 `;
 };
 
@@ -159,8 +159,8 @@ const BlueprintViewer = ({ projectName, location }) => {
       boxShadow: 'inset 0 0 20px rgba(0,210,255,0.1)'
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,210,255,0.3)', paddingBottom: '0.75rem', marginBottom: '1rem', fontSize: '0.85rem' }}>
-        <span>VISTA DE PLANTA ESTRUCTURAL - ESCALA 1:50</span>
-        <span>PROYECTO: {projectName.toUpperCase()}</span>
+        <span>STRUCTURAL PLAN VIEW - SCALE 1:50</span>
+        <span>PROJECT: {projectName.toUpperCase()}</span>
       </div>
       
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', overflowX: 'auto' }}>
@@ -195,10 +195,10 @@ const BlueprintViewer = ({ projectName, location }) => {
           <rect x="515" y="415" width="10" height="10" fill="#00d2ff" />
           <rect x="715" y="415" width="10" height="10" fill="#00d2ff" />
           
-          <text x="180" y="250" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">SALA / ESTAR</text>
-          <text x="400" y="160" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">COCINA</text>
-          <text x="400" y="330" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">COMEDOR</text>
-          <text x="620" y="250" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">DORMITORIO</text>
+          <text x="180" y="250" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">LIVING ROOM</text>
+          <text x="400" y="160" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">KITCHEN</text>
+          <text x="400" y="330" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">DINING ROOM</text>
+          <text x="620" y="250" fill="rgba(0, 210, 255, 0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">BEDROOM</text>
           
           <circle cx="730" cy="420" r="20" fill="none" stroke="#00d2ff" strokeWidth="1"/>
           <line x1="730" y1="440" x2="730" y2="400" stroke="#00d2ff" strokeWidth="1.5" />
@@ -216,7 +216,7 @@ const BlueprintViewer = ({ projectName, location }) => {
             <text x="180" y="42">6.20m</text>
             <text x="400" y="42">7.50m</text>
             <text x="620" y="42">6.20m</text>
-            <text x="400" y="32" fontSize="12" fontWeight="bold">ANCHO TOTAL: 19.90m</text>
+            <text x="400" y="32" fontSize="12" fontWeight="bold">TOTAL WIDTH: 19.90m</text>
           </g>
 
           <rect x="525" y="345" width="230" height="110" fill="#0b1329" stroke="#00d2ff" strokeWidth="1.5" />
@@ -225,16 +225,16 @@ const BlueprintViewer = ({ projectName, location }) => {
           <line x1="640" y1="410" x2="640" y2="455" stroke="#00d2ff" strokeWidth="1" />
           
           <text x="535" y="365" fill="#00d2ff" fontSize="12" fontWeight="bold">ASCA SOLUTIONS - BUILDPRO</text>
-          <text x="535" y="392" fill="#00d2ff" fontSize="10">PROYECTO: {projectName}</text>
-          <text x="535" y="425" fill="#00d2ff" fontSize="9">UBICACIÓN: {location}</text>
-          <text x="535" y="442" fill="#00d2ff" fontSize="9">PLANO: ESTRUCTURAL PLANTA BAJA</text>
-          <text x="648" y="425" fill="#00d2ff" fontSize="9">FECHA: 2026</text>
-          <text x="648" y="442" fill="#00d2ff" fontSize="9">ESCALA: 1:50</text>
+          <text x="535" y="392" fill="#00d2ff" fontSize="10">PROJECT: {projectName}</text>
+          <text x="535" y="425" fill="#00d2ff" fontSize="9">LOCATION: {location}</text>
+          <text x="535" y="442" fill="#00d2ff" fontSize="9">PLAN: STRUCTURAL GROUND FLOOR</text>
+          <text x="648" y="425" fill="#00d2ff" fontSize="9">DATE: 2026</text>
+          <text x="648" y="442" fill="#00d2ff" fontSize="9">SCALE: 1:50</text>
         </svg>
       </div>
       
       <div style={{ marginTop: '1rem', fontSize: '0.75rem', color: 'rgba(0,210,255,0.6)', display: 'flex', justifyContent: 'space-between' }}>
-        <span>* DOCUMENTO DIGITALIZADO - SOLO PARA PROPÓSITOS DE VISUALIZACIÓN EN OBRA</span>
+        <span>* DIGITAL DOCUMENT - FOR SITE VISUALIZATION PURPOSES ONLY</span>
         <span>ID: ARQ-PLN-{projectName.substring(0,3).toUpperCase()}</span>
       </div>
     </div>
@@ -256,38 +256,38 @@ const ContractViewer = ({ projectName, location, budget, deadline }) => {
       boxShadow: 'inset 0 0 20px rgba(255,255,255,0.02)'
     }}>
       <h3 style={{ textAlign: 'center', color: '#fff', fontSize: '1.4rem', marginBottom: '2rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
-        Contrato de Servicios de Construcción
+        Construction Services Contract
       </h3>
       
       <div style={{ marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-        <p><strong>Fecha de Emisión:</strong> {new Date().toLocaleDateString()}</p>
-        <p><strong>Contratista:</strong> ASCA Solutions LLC</p>
-        <p><strong>Propietario / Cliente:</strong> Sonia Home LLC</p>
-        <p><strong>Proyecto:</strong> {projectName}</p>
-        <p><strong>Ubicación:</strong> {location || 'No especificada'}</p>
+        <p><strong>Issue Date:</strong> {new Date().toLocaleDateString()}</p>
+        <p><strong>Contractor:</strong> ASCA Solutions LLC</p>
+        <p><strong>Owner / Client:</strong> Sonia Home LLC</p>
+        <p><strong>Project:</strong> {projectName}</p>
+        <p><strong>Location:</strong> {location || 'Not specified'}</p>
       </div>
 
       <hr style={{ border: '0', borderTop: '1px solid rgba(255, 255, 255, 0.1)', margin: '1.5rem 0' }} />
 
       <div style={{ fontSize: '0.9rem', textAlign: 'justify', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <p>
-          Reunidos por una parte el <strong>Contratista (ASCA Solutions LLC)</strong> y por la otra el <strong>Propietario (Sonia Home LLC)</strong>, acuerdan formalizar el presente acuerdo sujeto a las siguientes cláusulas:
+          Having gathered on one part the <strong>Contractor (ASCA Solutions LLC)</strong> and on the other the <strong>Owner (Sonia Home LLC)</strong>, they agree to formalize this agreement subject to the following clauses:
         </p>
         
         <p>
-          <strong>CLÁUSULA PRIMERA (OBJETO):</strong> El Contratista se obliga a realizar la dirección técnica, supervisión, mano de obra y suministro de materiales estructurales principales para el proyecto denominado <strong>"{projectName}"</strong>, conforme a los planos de arquitectura y especificaciones convenidas.
+          <strong>FIRST CLAUSE (OBJECT):</strong> The Contractor agrees to provide technical direction, supervision, labor, and major structural materials supply for the project named <strong>"{projectName}"</strong>, in accordance with the architectural plans and agreed specifications.
         </p>
 
         <p>
-          <strong>CLÁUSULA SEGUNDA (VALOR Y FORMA DE PAGO):</strong> El monto global estimado y aprobado para la conclusión de los trabajos estipulados asciende a la cantidad de <strong>${Number(budget || 0).toLocaleString()} USD</strong>. Los pagos se realizarán de acuerdo al calendario de hitos de obra establecido en el Cronograma Oficial.
+          <strong>SECOND CLAUSE (VALUE AND PAYMENT METHOD):</strong> The total estimated and approved amount for the completion of the stipulated works amounts to <strong>${Number(budget || 0).toLocaleString()} USD</strong>. Payments shall be made according to the project milestone schedule established in the Official Schedule.
         </p>
 
         <p>
-          <strong>CLÁUSULA TERCERA (PLAZO):</strong> Las partes convienen que los trabajos se iniciarán inmediatamente y deberán estar concluidos en su totalidad para el día <strong>{deadline ? new Date(deadline).toLocaleDateString() : 'conforme a estimación'}</strong>.
+          <strong>THIRD CLAUSE (DEADLINE):</strong> The parties agree that the work will start immediately and must be fully completed by <strong>{deadline ? new Date(deadline).toLocaleDateString() : 'as estimated'}</strong>.
         </p>
 
         <p>
-          <strong>CLÁUSULA CUARTA (GARANTÍA):</strong> El Contratista extiende una garantía de doce (12) meses para la estructura y cimentación de la obra, contados a partir de la firma del acta de recepción definitiva.
+          <strong>FOURTH CLAUSE (WARRANTY):</strong> The Contractor extends a twelve (12) month warranty on the structure and foundation of the project, starting from the signing of the final receipt act.
         </p>
       </div>
 
@@ -296,13 +296,13 @@ const ContractViewer = ({ projectName, location, budget, deadline }) => {
           <div style={{ height: '40px', borderBottom: '1px dashed rgba(255,255,255,0.3)', marginBottom: '0.5rem', color: '#3b82f6', fontStyle: 'italic', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             Sonia Home LLC (Digital Sign)
           </div>
-          <span>Por el Propietario</span>
+          <span>For the Owner</span>
         </div>
         <div style={{ textAlign: 'center', width: '45%' }}>
           <div style={{ height: '40px', borderBottom: '1px dashed rgba(255,255,255,0.3)', marginBottom: '0.5rem', color: '#10b981', fontStyle: 'italic', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             ASCA Solutions LLC
           </div>
-          <span>Por el Contratista</span>
+          <span>For the Contractor</span>
         </div>
       </div>
     </div>
@@ -325,58 +325,58 @@ const EstimateViewer = ({ projectName, budget }) => {
       color: '#fff',
     }}>
       <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
-        Desglose Presupuestario de Obra
+        Project Budget Breakdown
       </h3>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-        <span>Proyecto: <strong>{projectName}</strong></span>
-        <span>Presupuesto Total Aprobado: <strong style={{ color: '#10b981' }}>${Number(budget || 0).toLocaleString()} USD</strong></span>
+        <span>Project: <strong>{projectName}</strong></span>
+        <span>Total Approved Budget: <strong style={{ color: '#10b981' }}>${Number(budget || 0).toLocaleString()} USD</strong></span>
       </div>
 
       <table className="data-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
-            <th style={{ textAlign: 'left', padding: '0.75rem' }}>Categoría / Fase</th>
-            <th style={{ textAlign: 'center', padding: '0.75rem' }}>Porcentaje</th>
-            <th style={{ textAlign: 'right', padding: '0.75rem' }}>Monto Asignado (USD)</th>
-            <th style={{ textAlign: 'left', padding: '0.75rem', paddingLeft: '1rem' }}>Detalle de Partida</th>
+            <th style={{ textAlign: 'left', padding: '0.75rem' }}>Category / Phase</th>
+            <th style={{ textAlign: 'center', padding: '0.75rem' }}>Percentage</th>
+            <th style={{ textAlign: 'right', padding: '0.75rem' }}>Assigned Amount (USD)</th>
+            <th style={{ textAlign: 'left', padding: '0.75rem', paddingLeft: '1rem' }}>Item Details</th>
           </tr>
         </thead>
         <tbody>
           <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Cimentación & Suelo</td>
+            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Foundation & Soils</td>
             <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>15%</td>
             <td style={{ textAlign: 'right', fontWeight: 'bold' }}>${cimentacion.toLocaleString()}</td>
-            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Excavación preliminar, vertido de zapatas y compactación de prueba.</td>
+            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Preliminary excavation, footing pouring, and test compaction.</td>
           </tr>
           <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Estructura (Framing)</td>
+            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Framing & Structure</td>
             <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>30%</td>
             <td style={{ textAlign: 'right', fontWeight: 'bold' }}>${estructura.toLocaleString()}</td>
-            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Armazones estructurales de madera/metal, vigas y cubiertas de prueba.</td>
+            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Wood/metal structural framing, test beams, and roof decking.</td>
           </tr>
           <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Instalaciones (MEP)</td>
+            <td style={{ padding: '0.75rem', fontWeight: '500' }}>MEP Installations</td>
             <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>25%</td>
             <td style={{ textAlign: 'right', fontWeight: 'bold' }}>${sistemas.toLocaleString()}</td>
-            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Tuberías, climatización, ductos y cableado eléctrico de prueba.</td>
+            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Piping, HVAC, test ducts, and electrical wiring.</td>
           </tr>
           <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Acabados Interiores</td>
+            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Interior Finishes</td>
             <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>20%</td>
             <td style={{ textAlign: 'right', fontWeight: 'bold' }}>${acabados.toLocaleString()}</td>
-            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Paredes de drywall, molduras, acabados en madera y pintura de prueba.</td>
+            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Drywall walls, moldings, wood finishes, and test painting.</td>
           </tr>
           <tr style={{ borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
-            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Permisos & Reservas</td>
+            <td style={{ padding: '0.75rem', fontWeight: '500' }}>Permits & Reserves</td>
             <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>10%</td>
             <td style={{ textAlign: 'right', fontWeight: 'bold' }}>${contingencias.toLocaleString()}</td>
-            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Impuestos gubernamentales, licencias urbanas e imprevistos de prueba.</td>
+            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>Government taxes, urban licensing, and test contingency.</td>
           </tr>
           <tr style={{ backgroundColor: 'rgba(255,255,255,0.02)', fontWeight: 'bold' }}>
-            <td style={{ padding: '0.75rem', color: '#10b981' }}>TOTAL PRESUPUESTO</td>
+            <td style={{ padding: '0.75rem', color: '#10b981' }}>TOTAL BUDGET</td>
             <td style={{ textAlign: 'center', color: '#10b981' }}>100%</td>
             <td style={{ textAlign: 'right', color: '#10b981' }}>${budget.toLocaleString()}</td>
-            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: '#10b981' }}>Inversión final estimada para el proyecto.</td>
+            <td style={{ padding: '0.75rem', paddingLeft: '1rem', fontSize: '0.85rem', color: '#10b981' }}>Final estimated investment for the project.</td>
           </tr>
         </tbody>
       </table>
@@ -416,39 +416,39 @@ const PermitViewer = ({ fileName, projectName, location, fileId }) => {
         textTransform: 'uppercase',
         pointerEvents: 'none'
       }}>
-        <span>Aprobado</span>
-        <span style={{ fontSize: '0.6rem', margin: '3px 0' }}>Gobierno Local</span>
+        <span>Approved</span>
+        <span style={{ fontSize: '0.6rem', margin: '3px 0' }}>Local Government</span>
         <span style={{ fontSize: '0.7rem' }}>2026</span>
       </div>
 
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <h3 style={{ color: '#10b981', fontSize: '1.3rem', margin: '0 0 0.5rem 0', fontWeight: 'bold' }}>
-          GOBIERNO METROPOLITANO - DEPARTAMENTO DE OBRAS
+          METROPOLITAN GOVERNMENT - DEPARTMENT OF WORKS
         </h3>
         <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-          LICENCIA OFICIAL DE CONSTRUCCIÓN Y URBANISMO
+          OFFICIAL CONSTRUCTION AND PLANNING LICENSE
         </span>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem', marginBottom: '2rem' }}>
-        <div><strong>CÓDIGO DE PERMISO:</strong> <span style={{ color: '#10b981' }}>PERMIT-{fileId?.substring(0,8).toUpperCase() || '2026-X9'}</span></div>
-        <div><strong>DOCUMENTO ADJUNTO:</strong> {fileName}</div>
-        <div><strong>PROYECTO AUTORIZADO:</strong> {projectName}</div>
-        <div><strong>UBICACIÓN DE LA OBRA:</strong> {location || 'No especificada'}</div>
-        <div><strong>ESTADO DE LICENCIA:</strong> <span style={{ color: '#10b981', background: 'rgba(16,185,129,0.1)', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>VIGENTE y ACTIVA</span></div>
+        <div><strong>PERMIT CODE:</strong> <span style={{ color: '#10b981' }}>PERMIT-{fileId?.substring(0,8).toUpperCase() || '2026-X9'}</span></div>
+        <div><strong>ATTACHED DOCUMENT:</strong> {fileName}</div>
+        <div><strong>AUTHORIZED PROJECT:</strong> {projectName}</div>
+        <div><strong>CONSTRUCTION SITE LOCATION:</strong> {location || 'Not specified'}</div>
+        <div><strong>LICENSE STATUS:</strong> <span style={{ color: '#10b981', background: 'rgba(16,185,129,0.1)', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>CURRENT & ACTIVE</span></div>
       </div>
 
       <hr style={{ border: '0', borderTop: '1px dashed rgba(255, 255, 255, 0.1)', margin: '1.5rem 0' }} />
 
       <div style={{ fontSize: '0.8rem', lineHeight: '1.5', color: 'var(--text-muted)' }}>
         <p>
-          Este documento constituye la autorización de construcción correspondiente a los expedientes aprobados bajo la normativa de construcción residencial. La dirección de obra debe garantizar que los planos estructurales sellados se encuentren físicamente disponibles para cualquier inspección técnica de rutina.
+          This document constitutes the construction authorization corresponding to the files approved under residential construction regulations. The project management must ensure that the stamped structural plans are physically available for any routine technical inspection.
         </p>
       </div>
 
       <div style={{ marginTop: '3rem', fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
-        <span>Emisión: {new Date().toLocaleDateString()}</span>
-        <span>Código QR de Verificación: [AUTORIZADO]</span>
+        <span>Issued: {new Date().toLocaleDateString()}</span>
+        <span>Verification QR Code: [AUTHORIZED]</span>
       </div>
     </div>
   );
@@ -563,10 +563,10 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
     
     let content = '';
     let mimeType = 'text/plain';
-    let filename = file.name || 'documento.txt';
+    let filename = file.name || 'document.txt';
     
-    const projName = file.projects?.name || 'Todos los Proyectos';
-    const projLocation = file.projects?.location || 'No especificada';
+    const projName = file.projects?.name || 'All Projects';
+    const projLocation = file.projects?.location || 'Not specified';
     const projBudget = file.projects?.budget || 100000;
     const projDeadline = file.projects?.deadline || null;
     
@@ -683,7 +683,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                             color: 'var(--text-main)'
                           }}
                           onClick={() => setSelectedPreviewFile(file)}
-                          title="Click para Previsualizar"
+                          title="Click to Preview"
                         >
                           {file.name}
                         </span>
@@ -704,7 +704,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                           className="btn btn-secondary" 
                           style={{ padding: '0.5rem', display: 'inline-flex' }}
                           onClick={() => setSelectedPreviewFile(file)}
-                          title="Previsualizar Documento"
+                          title="Preview Document"
                         >
                           <Eye size={18} />
                         </button>
@@ -717,7 +717,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                             rel="noopener noreferrer" 
                             className="btn btn-secondary" 
                             style={{ padding: '0.5rem', display: 'inline-flex', textDecoration: 'none' }}
-                            title="Descargar archivo real"
+                            title="Download actual file"
                           >
                             <Download size={18} />
                           </a>
@@ -726,7 +726,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                             className="btn btn-secondary" 
                             style={{ padding: '0.5rem', display: 'inline-flex' }}
                             onClick={(e) => handleDownload(e, file)}
-                            title="Descargar archivo simulado"
+                            title="Download simulated file"
                           >
                             <Download size={18} />
                           </button>
@@ -840,7 +840,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                 </div>
                 <div>
                   <h2 style={{ fontSize: '1.25rem', margin: 0 }}>{selectedPreviewFile.name}</h2>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Categoría: {selectedPreviewFile.category}</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Category: {selectedPreviewFile.category}</span>
                 </div>
               </div>
               <button 
@@ -854,29 +854,29 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
             <div style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
               {selectedPreviewFile.category === 'Blueprints' && (
                 <BlueprintViewer 
-                  projectName={selectedPreviewFile.projects?.name || 'Todos los Proyectos'} 
-                  location={selectedPreviewFile.projects?.location || 'No especificada'} 
+                  projectName={selectedPreviewFile.projects?.name || 'All Projects'} 
+                  location={selectedPreviewFile.projects?.location || 'Not specified'} 
                 />
               )}
               {selectedPreviewFile.category === 'Contracts' && (
                 <ContractViewer 
-                  projectName={selectedPreviewFile.projects?.name || 'Todos los Proyectos'} 
-                  location={selectedPreviewFile.projects?.location || 'No especificada'} 
+                  projectName={selectedPreviewFile.projects?.name || 'All Projects'} 
+                  location={selectedPreviewFile.projects?.location || 'Not specified'} 
                   budget={selectedPreviewFile.projects?.budget || 100000}
                   deadline={selectedPreviewFile.projects?.deadline}
                 />
               )}
               {selectedPreviewFile.category === 'Estimates' && (
                 <EstimateViewer 
-                  projectName={selectedPreviewFile.projects?.name || 'Todos los Proyectos'} 
+                  projectName={selectedPreviewFile.projects?.name || 'All Projects'} 
                   budget={selectedPreviewFile.projects?.budget || 100000}
                 />
               )}
               {!['Blueprints', 'Contracts', 'Estimates'].includes(selectedPreviewFile.category) && (
                 <PermitViewer 
                   fileName={selectedPreviewFile.name}
-                  projectName={selectedPreviewFile.projects?.name || 'Todos los Proyectos'} 
-                  location={selectedPreviewFile.projects?.location || 'No especificada'} 
+                  projectName={selectedPreviewFile.projects?.name || 'All Projects'} 
+                  location={selectedPreviewFile.projects?.location || 'Not specified'} 
                   fileId={selectedPreviewFile.id}
                 />
               )}
@@ -884,7 +884,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
 
             <div style={{ display: 'flex', gap: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '1.25rem', justifyContent: 'flex-end' }}>
               <button type="button" className="btn btn-secondary" onClick={() => setSelectedPreviewFile(null)}>
-                Cerrar
+                Close
               </button>
               
               {selectedPreviewFile.file_url && selectedPreviewFile.file_url !== '#' ? (
@@ -895,7 +895,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                   className="btn btn-primary" 
                   style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                 >
-                  <Download size={18} /> Descargar Real
+                  <Download size={18} /> Download Real
                 </a>
               ) : (
                 <button 
@@ -903,7 +903,7 @@ const Documents = ({ activeProjectId, onSelectProject }) => {
                   onClick={(e) => handleDownload(e, selectedPreviewFile)}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                 >
-                  <Download size={18} /> Descargar Simulado
+                  <Download size={18} /> Download Simulated
                 </button>
               )}
             </div>

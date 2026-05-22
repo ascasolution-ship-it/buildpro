@@ -203,15 +203,15 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
               <div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Propietario / Cliente</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Owner / Client</span>
                     <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.owner || '—'}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Descripción / Tipo</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Description / Type</span>
                     <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.description || '—'}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Estado</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Status</span>
                     <div>
                       <span className={`badge badge-${
                         stats.status === 'Completed' ? 'success' : 
@@ -223,15 +223,15 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
                     </div>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Localización</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Location</span>
                     <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.location || '—'}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Presupuesto</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Budget</span>
                     <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>${Number(stats.budget || 0).toLocaleString()}</span>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Fecha Límite</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.25rem' }}>Deadline</span>
                     <span style={{ fontWeight: 500, color: '#fff', fontSize: '0.95rem' }}>{stats.deadline ? new Date(stats.deadline).toLocaleDateString() : '—'}</span>
                   </div>
                 </div>
@@ -240,13 +240,13 @@ const Dashboard = ({ activeProjectId, setActiveTab, onSelectProject }) => {
                     className="btn btn-primary" 
                     onClick={() => setActiveTab('schedule')}
                   >
-                    Ver Cronograma (Gantt)
+                    View Schedule (Gantt)
                   </button>
                   <button 
                     className="btn btn-secondary" 
                     onClick={() => setActiveTab('documents')}
                   >
-                    Ver Documentos
+                    View Documents
                   </button>
                 </div>
               </div>

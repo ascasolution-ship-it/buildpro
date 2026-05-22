@@ -173,10 +173,10 @@ const DailyLogs = ({ activeProjectId, onSelectProject }) => {
                 onChange={(e) => {
                   const val = e.target.value;
                   if (val === 'all') {
-                    onSelectProject('all', 'Todos los Proyectos');
+                    onSelectProject('all', 'All Projects');
                   } else {
                     const p = projects.find(proj => proj.id === val);
-                    onSelectProject(val, p ? p.name : 'Proyecto');
+                    onSelectProject(val, p ? p.name : 'Project');
                   }
                 }}
               >

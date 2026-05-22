@@ -336,10 +336,10 @@ const Schedule = ({ activeProjectId, onSelectProject }) => {
               onChange={(e) => {
                 const val = e.target.value;
                 if (val === 'all') {
-                  onSelectProject('all', 'Todos los Proyectos');
+                  onSelectProject('all', 'All Projects');
                 } else {
                   const p = projects.find(proj => proj.id === val);
-                  onSelectProject(val, p ? p.name : 'Proyecto');
+                  onSelectProject(val, p ? p.name : 'Project');
                 }
               }}
             >
@@ -501,7 +501,7 @@ const Schedule = ({ activeProjectId, onSelectProject }) => {
                 style={{ width: '100%', justifyContent: 'center', marginBottom: '1rem', backgroundColor: 'var(--secondary-color)', color: 'white' }}
                 onClick={() => setEditTask({...editTask, progress: 100})}
               >
-                ✓ Marcar como Terminado (100%)
+                ✓ Mark as Completed (100%)
               </button>
 
               <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>

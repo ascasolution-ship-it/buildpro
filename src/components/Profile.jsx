@@ -2,6 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { User, Building, Shield, Lock, Send, Clock, Check, AlertCircle } from 'lucide-react';
 
+const getRequestTypeLabel = (type) => {
+  switch (type) {
+    case 'Modificación de Obra':
+    case 'Work Modification':
+      return 'Work Modification / Views';
+    case 'Cambio de Contraseña Administrativa':
+    case 'Administrative Password Change':
+      return 'Administrative Password Change';
+    case 'Ajuste de Base de Datos / Supabase':
+    case 'Database Adjustment':
+      return 'Database / Supabase Adjustment';
+    case 'Añadir Nueva Funcionalidad':
+    case 'Add New Feature':
+      return 'Add New Feature';
+    case 'Reportar un Bug / Error':
+    case 'Report a Bug':
+      return 'Report a Bug / Error';
+    default:
+      return type;
+  }
+};
+
 const Profile = () => {
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState({ company_name: '', plan_type: '', subscription_status: '' });
@@ -14,7 +36,7 @@ const Profile = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   
   // Support Request States
-  const [requestType, setRequestType] = useState('Modificación de Obra');
+  const [requestType, setRequestType] = useState('Work Modification');
   const [description, setDescription] = useState('');
   const [requestList, setRequestList] = useState([]);
   
@@ -83,7 +105,7 @@ const Profile = () => {
       if (error) throw error;
       
       setProfile(prev => ({ ...prev, company_name: companyName }));
-      setInfoMsg('¡Nombre de constructora actualizado correctamente!');
+      setInfoMsg('Builder name updated successfully!');
     } catch (err) {
       setErrorMsg(err.message);
     } finally {
@@ -97,12 +119,12 @@ const Profile = () => {
     setErrorMsg(null);
 
     if (newPassword !== confirmPassword) {
-      setErrorMsg('Las contraseñas no coinciden');
+      setErrorMsg('Passwords do not match');
       return;
     }
 
     if (newPassword.length < 6) {
-      setErrorMsg('La contraseña debe tener al menos 6 caracteres');
+      setErrorMsg('Password must be at least 6 characters long');
       return;
     }
 
@@ -114,7 +136,7 @@ const Profile = () => {
 
       if (error) throw error;
 
-      setInfoMsg('¡Contraseña cambiada con éxito!');
+      setInfoMsg('Password changed successfully!');
       setNewPassword('');
       setConfirmPassword('');
     } catch (err) {
@@ -130,7 +152,7 @@ const Profile = () => {
     setErrorMsg(null);
 
     if (!description.trim()) {
-      setErrorMsg('Por favor describe tu solicitud');
+      setErrorMsg('Please describe your request');
       return;
     }
 
@@ -146,7 +168,7 @@ const Profile = () => {
 
       if (error) throw error;
 
-      setInfoMsg('¡Solicitud enviada con éxito! Nuestro equipo técnico de ASCA Solutions la revisará.');
+      setInfoMsg('Request sent successfully! Our technical team at ASCA Solutions will review it.');
       setDescription('');
       fetchChangeRequests(session.user.id);
     } catch (err) {
@@ -159,7 +181,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem', color: 'var(--text-muted)' }}>
-        Cargando perfil...
+        Loading profile...
       </div>
     );
   }
@@ -196,17 +218,17 @@ const Profile = () => {
         <div className="content-card glass" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
             <User size={22} style={{ color: 'var(--primary-color)' }} />
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Información de la Cuenta</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Account Information</h3>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Email del Builder</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Builder's Email</span>
               <span style={{ fontSize: '0.95rem', color: '#fff', fontWeight: '500' }}>{session?.user?.email}</span>
             </div>
 
             <div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Tipo de Plan</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Plan Type</span>
               <span style={{ 
                 fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', 
                 color: profile.plan_type === 'pro' ? '#a5b4fc' : '#fff',
@@ -214,12 +236,12 @@ const Profile = () => {
                 padding: '0.2rem 0.6rem', borderRadius: '0.375rem', border: profile.plan_type === 'pro' ? '1px solid rgba(88, 80, 236, 0.3)' : '1px solid rgba(255,255,255,0.1)',
                 display: 'inline-block', marginTop: '0.25rem'
               }}>
-                {profile.plan_type === 'pro' ? 'Constructor Pro' : profile.plan_type === 'enterprise' ? 'Enterprise / Corporativo' : 'Plan Contratista'}
+                {profile.plan_type === 'pro' ? 'Pro Builder' : profile.plan_type === 'enterprise' ? 'Enterprise' : 'Contractor Plan'}
               </span>
             </div>
 
             <div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Estado de Suscripción</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Subscription Status</span>
               <span style={{ 
                 fontSize: '0.85rem', fontWeight: '600', 
                 color: profile.subscription_status === 'active' ? '#34d399' : '#f87171',
@@ -227,7 +249,7 @@ const Profile = () => {
                 padding: '0.2rem 0.6rem', borderRadius: '0.375rem', border: profile.subscription_status === 'active' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)',
                 display: 'inline-block', marginTop: '0.25rem'
               }}>
-                {profile.subscription_status === 'active' ? 'Activo (Prueba Gratis/Pago)' : 'Inactivo'}
+                {profile.subscription_status === 'active' ? 'Active (Free Trial/Paid)' : 'Inactive'}
               </span>
             </div>
           </div>
@@ -236,7 +258,7 @@ const Profile = () => {
           <form onSubmit={handleUpdateCompany} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.5rem' }}>
             <div className="form-group">
               <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Building size={16} /><span>Nombre de la Constructora</span>
+                <Building size={16} /><span>Builder / Company Name</span>
               </label>
               <input 
                 type="text" 
@@ -247,7 +269,7 @@ const Profile = () => {
               />
             </div>
             <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={updateLoading}>
-              Guardar Cambios
+              Save Changes
             </button>
           </form>
         </div>
@@ -256,77 +278,77 @@ const Profile = () => {
         <div className="content-card glass" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
             <Lock size={22} style={{ color: 'var(--secondary-color)' }} />
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Seguridad y Contraseña</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Security and Password</h3>
           </div>
 
           <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div className="form-group">
-              <label className="form-label">Nueva Contraseña</label>
+              <label className="form-label">New Password</label>
               <input 
                 type="password" 
                 className="form-input glass" 
                 required 
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Minimum 6 characters"
                 value={newPassword} 
                 onChange={e => setNewPassword(e.target.value)} 
               />
             </div>
             <div className="form-group">
-              <label className="form-label">Confirmar Nueva Contraseña</label>
+              <label className="form-label">Confirm New Password</label>
               <input 
                 type="password" 
                 className="form-input glass" 
                 required 
-                placeholder="Repite la contraseña"
+                placeholder="Repeat password"
                 value={confirmPassword} 
                 onChange={e => setConfirmPassword(e.target.value)} 
               />
             </div>
             <button type="submit" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center', marginTop: '0.5rem' }} disabled={updateLoading}>
-              Actualizar Contraseña
+              Update Password
             </button>
           </form>
         </div>
       </div>
 
-      {/* Row 2: Solicitudes de Modificación (Support and Custom Feature Requests) */}
+      {/* Row 2: Change Requests (Support and Custom Feature Requests) */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
         
         {/* Form to submit change request */}
         <div className="content-card glass" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
             <Send size={22} style={{ color: '#818cf8' }} />
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Solicitar Cambios y Modificaciones</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Request Changes and Support</h3>
           </div>
 
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: '1.4' }}>
-            ¿Necesitas cambios personalizados en tus contraseñas, bases de datos o funcionalidades de obra? Describe tu solicitud y ASCA Solutions la implementará.
+            Need custom changes to your passwords, databases, or construction features? Describe your request and ASCA Solutions will implement it.
           </p>
 
           <form onSubmit={handleSubmitRequest} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div className="form-group">
-              <label className="form-label">Tipo de Solicitud</label>
+              <label className="form-label">Request Type</label>
               <select 
                 className="form-input glass" 
                 style={{ backgroundColor: '#050505', color: '#fff' }}
                 value={requestType} 
                 onChange={e => setRequestType(e.target.value)}
               >
-                <option value="Modificación de Obra">Modificación de Obra / Vistas</option>
-                <option value="Cambio de Contraseña Administrativa">Cambio de Contraseña Administrativa</option>
-                <option value="Ajuste de Base de Datos / Supabase">Ajuste de Base de Datos / Supabase</option>
-                <option value="Añadir Nueva Funcionalidad">Añadir Nueva Funcionalidad</option>
-                <option value="Reportar un Bug / Error">Reportar un Bug / Error</option>
+                <option value="Work Modification">Work Modification / Views</option>
+                <option value="Administrative Password Change">Administrative Password Change</option>
+                <option value="Database Adjustment">Database / Supabase Adjustment</option>
+                <option value="Add New Feature">Add New Feature</option>
+                <option value="Report a Bug">Report a Bug / Error</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label className="form-label">Detalle y Descripción</label>
+              <label className="form-label">Details and Description</label>
               <textarea 
                 className="form-input glass" 
                 rows="4"
                 style={{ resize: 'none' }}
-                placeholder="Escribe aquí con detalle qué cambios necesitas..."
+                placeholder="Write here in detail what changes you need..."
                 value={description}
                 onChange={e => setDescription(e.target.value)}
                 required
@@ -334,7 +356,7 @@ const Profile = () => {
             </div>
 
             <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={updateLoading}>
-              Enviar Solicitud
+              Submit Request
             </button>
           </form>
         </div>
@@ -343,12 +365,12 @@ const Profile = () => {
         <div className="content-card glass" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
             <Clock size={22} style={{ color: 'var(--text-muted)' }} />
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Historial de Solicitudes</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', fontFamily: 'Outfit, sans-serif' }}>Request History</h3>
           </div>
 
           {requestList.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              No has enviado ninguna solicitud de cambio aún.
+              You have not submitted any change requests yet.
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '350px', overflowY: 'auto', paddingRight: '0.5rem' }}>
@@ -358,14 +380,14 @@ const Profile = () => {
                   backgroundColor: 'rgba(255,255,255,0.01)', display: 'flex', flexDirection: 'column', gap: '0.5rem'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: '600', color: '#fff', fontSize: '0.9rem' }}>{req.request_type}</span>
+                    <span style={{ fontWeight: '600', color: '#fff', fontSize: '0.9rem' }}>{getRequestTypeLabel(req.request_type)}</span>
                     <span className="badge" style={{
                       backgroundColor: req.status === 'pending' ? 'rgba(245, 158, 11, 0.15)' : 'rgba(16, 185, 129, 0.15)',
                       color: req.status === 'pending' ? '#f59e0b' : '#34d399',
                       border: req.status === 'pending' ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid rgba(16, 185, 129, 0.3)',
                       fontSize: '0.75rem', padding: '0.15rem 0.5rem'
                     }}>
-                      {req.status === 'pending' ? 'Pendiente' : 'Completado'}
+                      {req.status === 'pending' ? 'Pending' : 'Completed'}
                     </span>
                   </div>
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>{req.description}</p>

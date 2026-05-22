@@ -33,9 +33,9 @@ const Login = () => {
         if (signUpErr) throw signUpErr;
 
         if (data?.user?.identities?.length === 0) {
-          setError('El correo ingresado ya está registrado.');
+          setError('The email entered is already registered.');
         } else {
-          setMessage('¡Registro exitoso! Por favor verifica tu correo para confirmar tu cuenta.');
+          setMessage('Registration successful! Please check your email to confirm your account.');
           // Auto transition to login or clear form
           setEmail('');
           setPassword('');
@@ -51,7 +51,7 @@ const Login = () => {
         if (signInErr) throw signInErr;
       }
     } catch (err) {
-      setError(err.message || 'Ocurrió un error inesperado');
+      setError(err.message || 'An unexpected error occurred');
     } finally {
       setLoading(false);
     }
@@ -121,8 +121,8 @@ const Login = () => {
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
             {isRegister 
-              ? 'Únete a la plataforma líder para constructores por ASCA Solutions' 
-              : 'Gestión y control de obras en tiempo real'}
+              ? 'Join the leading platform for builders by ASCA Solutions' 
+              : 'Real-time project management and construction control'}
           </p>
         </div>
 
@@ -167,13 +167,13 @@ const Login = () => {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {isRegister && (
             <div className="form-group">
-              <label className="form-label" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Nombre de la Constructora / Empresa</label>
+              <label className="form-label" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Company / Construction Name</label>
               <div style={{ position: 'relative' }}>
                 <input
                   type="text"
                   className="form-input glass"
                   style={{ paddingLeft: '2.5rem', width: '100%', boxSizing: 'border-box' }}
-                  placeholder="Ej. ASCA Solutions Builder"
+                  placeholder="e.g. ASCA Solutions Builder"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   required={isRegister}
@@ -184,13 +184,13 @@ const Login = () => {
           )}
 
           <div className="form-group">
-            <label className="form-label" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Correo Electrónico</label>
+            <label className="form-label" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Email Address</label>
             <div style={{ position: 'relative' }}>
               <input
                 type="email"
                 className="form-input glass"
                 style={{ paddingLeft: '2.5rem', width: '100%', boxSizing: 'border-box' }}
-                placeholder="ejemplo@constructora.com"
+                placeholder="builder@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -200,7 +200,7 @@ const Login = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Contraseña</label>
+            <label className="form-label" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.85rem' }}>Password</label>
             <div style={{ position: 'relative' }}>
               <input
                 type="password"
@@ -229,7 +229,7 @@ const Login = () => {
             }}
             disabled={loading}
           >
-            {loading ? 'Procesando...' : isRegister ? 'Crear mi Cuenta de Builder' : 'Iniciar Sesión'}
+            {loading ? 'Processing...' : isRegister ? 'Create My Builder Account' : 'Sign In'}
             {!loading && <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />}
           </button>
         </form>
@@ -242,7 +242,7 @@ const Login = () => {
           paddingTop: '1.25rem'
         }}>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: 0 }}>
-            {isRegister ? '¿Ya tienes una cuenta registrada?' : '¿Eres un constructor nuevo?'}
+            {isRegister ? 'Already have an account?' : 'Are you a new builder?'}
             <button
               onClick={() => {
                 setIsRegister(!isRegister);
@@ -260,7 +260,7 @@ const Login = () => {
                 textDecoration: 'underline'
               }}
             >
-              {isRegister ? 'Inicia Sesión aquí' : 'Regístrate aquí'}
+              {isRegister ? 'Sign In here' : 'Register here'}
             </button>
           </p>
         </div>
