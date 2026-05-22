@@ -239,7 +239,7 @@ const Schedule = ({ activeProjectId, onSelectProject }) => {
   };
 
   const handleExpanderClick = (task) => {
-    setTasks(tasks.map(t => (t.id === task.id ? { ...task, hideChildren: !task.hideChildren } : t)));
+    setTasks(prevTasks => prevTasks.map(t => (t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t)));
   };
 
   const handleProgressChange = async (task) => {
@@ -306,11 +306,34 @@ const Schedule = ({ activeProjectId, onSelectProject }) => {
     columnWidth = 250;
   }
 
+  const getVisibleTasks = (tasksList) => {
+    const taskMap = {};
+    tasks.forEach(t => {
+      taskMap[t.id] = t;
+    });
+
+    const isAncestorCollapsed = (task) => {
+      let current = task;
+      while (current && current.project) {
+        const parent = taskMap[current.project];
+        if (parent && parent.hideChildren) {
+          return true;
+        }
+        current = parent;
+      }
+      return false;
+    };
+
+    return tasksList.filter(t => !isAncestorCollapsed(t));
+  };
+
   const filteredTasks = (!activeProjectId || activeProjectId === 'all') 
     ? tasks 
     : tasks.filter(t => t.project_id === activeProjectId);
 
-  const displayTasks = filteredTasks.length > 0 ? filteredTasks : [{
+  const visibleTasks = getVisibleTasks(filteredTasks);
+
+  const displayTasks = visibleTasks.length > 0 ? visibleTasks : [{
     start: new Date(),
     end: new Date(new Date().setDate(new Date().getDate() + 3)),
     name: 'No tasks for this project',
