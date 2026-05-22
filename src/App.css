@@ -1,0 +1,32 @@
+/* App specific styles if needed */
+
+/* Gantt Chart Overrides for Dark Theme Contrast */
+.gantt-wrapper {
+  color: #333333;
+}
+
+.gantt-wrapper text {
+  fill: #333333 !important;
+}
+
+.gantt-wrapper table,
+.gantt-wrapper svg {
+  border-collapse: collapse;
+}
+
+/* Improve grid lines inside Gantt */
+.gantt-wrapper line {
+  stroke: #d1d5db !important; /* Darker gray for grid lines */
+}
+
+/* Darken dependency arrows */
+.gantt-wrapper path {
+  stroke: #4b5563 !important; /* Slate 600 for clear arrows */
+  stroke-width: 2px !important;
+}
+
+/* Ensure list cell text stands out */
+.gantt-wrapper ._3EtuO, /* Obfuscated class for table wrapper in gantt-task-react */
+.gantt-wrapper ._2R91R { 
+  border-right: 1px solid #d1d5db;
+}
